@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow REST API — Geliştirici & Test Paneli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --primary: #238636;
+      --primary-hover: #2ea043;
+      --blue: #58a6ff;
+      --purple: #bc8cff;
+      --yellow: #d29922;
+      --red: #f85149;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --text-muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 30px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 30px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .badge-dev {
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+    .metric-value { font-size: 2rem; font-weight: 800; color: var(--text-bright); margin-top: 5px; }
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 25px;
+    }
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      color: var(--text-bright);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .endpoint-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--text-bright);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .endpoint-btn:hover {
+      background: #30363d;
+      border-color: var(--blue);
+      transform: translateX(3px);
+    }
+    .method {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .m-get { background: rgba(35, 134, 54, 0.2); color: #3fb950; border: 1px solid #3fb950; }
+    .m-post { background: rgba(88, 166, 255, 0.2); color: var(--blue); border: 1px solid var(--blue); }
+    .m-put { background: rgba(210, 153, 34, 0.2); color: var(--yellow); border: 1px solid var(--yellow); }
+    .m-del { background: rgba(248, 81, 73, 0.2); color: var(--red); border: 1px solid var(--red); }
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .status-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .st-200 { background: rgba(35, 134, 54, 0.25); color: #3fb950; }
+    .st-400 { background: rgba(210, 153, 34, 0.25); color: var(--yellow); }
+    .st-401 { background: rgba(248, 81, 73, 0.25); color: var(--red); }
+    pre {
+      background: #090d13;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      color: #7ee787;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      max-height: 520px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1 style="color: #f0f6fc; font-size: 1.6rem; display: flex; align-items: center; gap: 10px;">
+          ⚡ TASKFLOW REST API
+        </h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+          Görev ve Proje Yönetim Sistemi — Node.js & Express.js Bitirme Projesi
+        </p>
+      </div>
+      <div>
+        <span class="badge-dev">Geliştirici: Sefa Yusuf Kütük</span>
+      </div>
+    </header>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div style="color: var(--text-muted); font-size: 0.85rem;">Toplam Görev</div>
+        <div class="metric-value" id="stat-total">-</div>
+      </div>
+      <div class="metric-card">
+        <div style="color: #3fb950; font-size: 0.85rem;">Tamamlanan</div>
+        <div class="metric-value" id="stat-completed" style="color: #3fb950;">-</div>
+      </div>
+      <div class="metric-card">
+        <div style="color: var(--blue); font-size: 0.85rem;">Devam Eden</div>
+        <div class="metric-value" id="stat-progress" style="color: var(--blue);">-</div>
+      </div>
+      <div class="metric-card">
+        <div style="color: var(--purple); font-size: 0.85rem;">Tamamlanma Oranı</div>
+        <div class="metric-value" id="stat-rate" style="color: var(--purple);">-</div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <!-- SOL: Canlı Uç Nokta Butonları -->
+      <div class="card">
+        <h2>🛠️ Canlı Uç Nokta Test Paneli</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">
+          Aşağıdaki butonlara tıklayarak API uç noktalarını anında tetikleyebilir ve canlı JSON cevabını sağ tarafta inceleyebilirsiniz:
+        </p>
+
+        <button class="endpoint-btn" onclick="runTest('GET', '/api/tasks')">
+          <span><span class="method m-get">GET</span> /api/tasks</span>
+          <small style="color: var(--text-muted);">Tüm Görevler</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('GET', '/api/reports/summary')">
+          <span><span class="method m-get">GET</span> /api/reports/summary</span>
+          <small style="color: var(--purple);">Özet Rapor (Pratik 3)</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('GET', '/api/tasks/search?keyword=backend')">
+          <span><span class="method m-get">GET</span> /api/tasks/search?keyword=backend</span>
+          <small style="color: var(--blue);">Arama Motoru (Pratik 1)</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('GET', '/api/tasks?priority=critical')">
+          <span><span class="method m-get">GET</span> /api/tasks?priority=critical</span>
+          <small style="color: var(--yellow);">Kritik Öncelik Filtresi</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('POST', '/api/tasks', sampleNewTask)">
+          <span><span class="method m-post">POST</span> /api/tasks</span>
+          <small style="color: #3fb950;">Yeni Görev Ekle</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('POST', '/api/tasks', invalidTask)">
+          <span><span class="method m-post">POST</span> /api/tasks (Hatalı Veri Testi)</span>
+          <small style="color: var(--red);">400 Validation (Pratik 2)</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('DELETE', '/api/tasks/tsk-001')">
+          <span><span class="method m-del">DELETE</span> /api/tasks/tsk-001 (Anahtarsız)</span>
+          <small style="color: var(--red);">401 Güvenlik Testi</small>
+        </button>
+
+        <button class="endpoint-btn" onclick="runTest('DELETE', '/api/tasks/tsk-999', null, 'taskflow-secret-key-2026')">
+          <span><span class="method m-del">DELETE</span> /api/tasks/tsk-999 (x-api-key İle)</span>
+          <small style="color: #3fb950;">Yetkili Silme Testi</small>
+        </button>
+      </div>
+
+      <!-- SAĞ: Canlı JSON Yanıt Alanı -->
+      <div class="card">
+        <div class="response-header">
+          <h2>📡 Canlı API Yanıtı</h2>
+          <span id="response-status" class="status-pill st-200">200 OK — 4ms</span>
+        </div>
+        <div style="font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;" id="response-endpoint">
+          GET /api/reports/summary
+        </div>
+        <pre id="json-viewer">Yanıt bekleniyor...</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sampleNewTask = {
+      title: "TaskFlow Swagger OpenAPI Dokümantasyonu",
+      description: "API uç noktalarının OpenAPI standartlarında şematize edilmesi ve interaktif arayüzün hazırlanması.",
+      priority: "high",
+      status: "in_progress",
+      assignee: "Sefa Yusuf Kütük",
+      tags: ["api", "swagger", "documentation"]
+    };
+
+    const invalidTask = {
+      title: "a", // 3 karakterden kısa -> Hata
+      assignee: "" // Boş -> Hata
+    };
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/reports/summary');
+        const data = await res.json();
+        if (data.success && data.metrics) {
+          document.getElementById('stat-total').innerText = data.metrics.totalTasks;
+          document.getElementById('stat-completed').innerText = data.metrics.statusBreakdown.completed;
+          document.getElementById('stat-progress').innerText = data.metrics.statusBreakdown.in_progress;
+          document.getElementById('stat-rate').innerText = data.metrics.completionRate;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function runTest(method, url, body = null, apiKey = null) {
+      const startTime = performance.now();
+      const endpointEl = document.getElementById('response-endpoint');
+      const statusEl = document.getElementById('response-status');
+      const viewerEl = document.getElementById('json-viewer');
+
+      endpointEl.innerText = `${method} ${url}`;
+      viewerEl.innerText = "İstek gönderiliyor...";
+
+      const headers = { 'Content-Type': 'application/json' };
+      if (apiKey) headers['x-api-key'] = apiKey;
+
+      try {
+        const options = { method, headers };
+        if (body) options.body = JSON.stringify(body);
+
+        const res = await fetch(url, options);
+        const duration = Math.round(performance.now() - startTime);
+        const data = await res.json();
+
+        statusEl.className = 'status-pill ' + (res.status < 300 ? 'st-200' : (res.status === 400 ? 'st-400' : 'st-401'));
+        statusEl.innerText = `${res.status} ${res.statusText || ''} — ${duration}ms`;
+
+        viewerEl.innerText = JSON.stringify(data, null, 2);
+        loadStats();
+      } catch (err) {
+        statusEl.className = 'status-pill st-401';
+        statusEl.innerText = `ERR — ${err.message}`;
+        viewerEl.innerText = JSON.stringify({ error: err.message }, null, 2);
+      }
+    }
+
+    // Sayfa açıldığında özeti çek
+    runTest('GET', '/api/reports/summary');
+  </script>
+</body>
+</html>

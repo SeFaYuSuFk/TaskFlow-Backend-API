@@ -1,0 +1,274 @@
+{
+  "info": {
+    "_postman_id": "taskflow-api-collection-sefa-yusuf-kutuk",
+    "name": "TaskFlow REST API — Sefa Yusuf Kütük",
+    "description": "TaskFlow - Görev ve Proje Yönetim Sistemi REST API (Node.js & Express.js Bitirme Projesi)\nEğitmen: Musa Kolcuk\nGeliştirici: Sefa Yusuf Kütük\n\nBu koleksiyon hem zorunlu CRUD uç noktalarını hem de 4 ileri seviye pratiği (Filtreleme, Validation, Raporlama ve Güvenlik) içerir.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Zorunlu CRUD İşlemleri",
+      "item": [
+        {
+          "name": "Tüm Görevleri Getir (GET /api/tasks)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"]
+            }
+          }
+        },
+        {
+          "name": "Tek Bir Görev Detayı (GET /api/tasks/:id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/tsk-001",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "tsk-001"]
+            }
+          }
+        },
+        {
+          "name": "Yeni Görev Ekle (POST /api/tasks)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Postman Test Suite Hazırlanması\",\n  \"description\": \"Tüm CRUD ve raporlama rotalarının Postman üzerinden test edilmesi.\",\n  \"priority\": \"high\",\n  \"status\": \"in_progress\",\n  \"assignee\": \"Sefa Yusuf Kütük\",\n  \"tags\": [\"testing\", \"postman\", \"qa\"]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/tasks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"]
+            }
+          }
+        },
+        {
+          "name": "Görev Güncelle (PUT /api/tasks/:id)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"priority\": \"critical\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/tsk-002",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "tsk-002"]
+            }
+          }
+        },
+        {
+          "name": "Görev Sil - x-api-key İle (DELETE /api/tasks/:id)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "x-api-key", "value": "taskflow-secret-key-2026" }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/tsk-007",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "tsk-007"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. İleri Seviye Pratik 1 — Filtreleme & Arama",
+      "item": [
+        {
+          "name": "Duruma Göre Filtrele (completed)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks?status=completed",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"],
+              "query": [{ "key": "status", "value": "completed" }]
+            }
+          }
+        },
+        {
+          "name": "Önceliğe Göre Filtrele (critical)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks?priority=critical",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"],
+              "query": [{ "key": "priority", "value": "critical" }]
+            }
+          }
+        },
+        {
+          "name": "Görev Arama (search?keyword=backend)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/search?keyword=backend",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "search"],
+              "query": [{ "key": "keyword", "value": "backend" }]
+            }
+          }
+        },
+        {
+          "name": "Kullanıcı Görevleri (/assignee/Sefa)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/assignee/Sefa",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "assignee", "Sefa"]
+            }
+          }
+        },
+        {
+          "name": "Sayfalama & Sıralama (?page=1&limit=5&sort=createdAt)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks?page=1&limit=5&sort=createdAt&order=desc",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "5" },
+                { "key": "sort", "value": "createdAt" },
+                { "key": "order", "value": "desc" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. İleri Seviye Pratik 2 — Validation (Hata Yönetimi)",
+      "item": [
+        {
+          "name": "Doğrulama Hatası Testi (400 Bad Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"a\",\n  \"priority\": \"SUPER_HIGH\",\n  \"assignee\": \"\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/tasks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. İleri Seviye Pratik 3 — Raporlama Servisleri",
+      "item": [
+        {
+          "name": "Genel Sistem Özeti (GET /api/reports/summary)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/reports/summary",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "reports", "summary"]
+            }
+          }
+        },
+        {
+          "name": "Tamamlanan Görevler Raporu (GET /api/reports/completed)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/reports/completed",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "reports", "completed"]
+            }
+          }
+        },
+        {
+          "name": "Bekleyen Görevler Raporu (GET /api/reports/pending)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/reports/pending",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "reports", "pending"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Güvenlik Kalkanı Testleri",
+      "item": [
+        {
+          "name": "Yetkisiz Silme Engeli (401 Unauthorized)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tasks/tsk-001",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "tasks", "tsk-001"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

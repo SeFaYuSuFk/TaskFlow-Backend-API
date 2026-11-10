@@ -1,0 +1,29 @@
+{
+  "name": "taskflow-backend-api",
+  "version": "1.0.0",
+  "description": "TaskFlow - Görev ve Proje Yönetim Sistemi REST API (Node.js & Express.js Bitirme Projesi)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api",
+    "crud",
+    "middleware",
+    "taskflow",
+    "security",
+    "sefa-yusuf-kutuk"
+  ],
+  "author": "Sefa Yusuf Kütük",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
+    "helmet": "^8.3.0"
+  }
+}

@@ -1,0 +1,148 @@
+[
+  {
+    "id": "tsk-001",
+    "title": "NovaStore SQL Veritabanı ve Stored Procedure Optimizasyonu",
+    "description": "NovaStoreDB üzerinde 5 tablolu ilişkisel şema, sp_AkilliSiparisVer prosedürü ve trg_StokOtomatikDusur trigger sisteminin T-SQL ile kodlanması.",
+    "status": "completed",
+    "priority": "high",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "database",
+      "sql-server",
+      "t-sql",
+      "stored-procedure"
+    ],
+    "createdAt": "2026-11-07T10:00:00.000Z",
+    "updatedAt": "2026-11-07T16:45:00.000Z"
+  },
+  {
+    "id": "tsk-002",
+    "title": "TaskFlow RESTful Backend Mimarisi ve CRUD Modülleri",
+    "description": "Node.js ve Express.js kullanılarak Clean Architecture prensiplerine uygun katmanlı API iskeletinin ve CRUD uç noktalarının kurulması.",
+    "status": "in_progress",
+    "priority": "critical",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "backend",
+      "nodejs",
+      "express",
+      "rest-api",
+      "crud"
+    ],
+    "createdAt": "2026-11-08T08:00:00.000Z",
+    "updatedAt": "2026-11-08T09:30:00.000Z"
+  },
+  {
+    "id": "tsk-003",
+    "title": "Kurumsal Güvenlik Kalkanı: Helmet, Rate Limiting ve API Key",
+    "description": "API uç noktalarının DDoS bot saldırılarına, XSS açıklarına karşı korunması ve kritik DELETE işlemleri için x-api-key yetkilendirme katmanının yazılması.",
+    "status": "in_progress",
+    "priority": "critical",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "security",
+      "helmet",
+      "rate-limit",
+      "auth",
+      "xss"
+    ],
+    "createdAt": "2026-11-08T08:30:00.000Z",
+    "updatedAt": "2026-11-08T09:45:00.000Z"
+  },
+  {
+    "id": "tsk-004",
+    "title": "Gelişmiş Filtreleme, Arama Motoru ve İstatistiksel Raporlama Servisleri",
+    "description": "Musa Hoca'nın ileri seviye pratikleri kapsamında görev arama (search), durum/öncelik filtreleme ve /reports/summary analitik servislerinin geliştirilmesi.",
+    "status": "completed",
+    "priority": "high",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "backend",
+      "analytics",
+      "search",
+      "filter",
+      "reporting"
+    ],
+    "createdAt": "2026-11-08T08:45:00.000Z",
+    "updatedAt": "2026-11-08T10:00:00.000Z"
+  },
+  {
+    "id": "tsk-005",
+    "title": "React.js ve Tailwind CSS ile Modern Görev Yönetim Arayüzü",
+    "description": "TaskFlow API ile entegre çalışacak modern, responsive, LocalStorage destekli web ön yüz bileşenlerinin React ve Tailwind CSS ile kodlanması.",
+    "status": "pending",
+    "priority": "medium",
+    "assignee": "Onur Yalçın",
+    "tags": [
+      "frontend",
+      "react",
+      "tailwind",
+      "web-ui"
+    ],
+    "createdAt": "2026-11-08T09:00:00.000Z",
+    "updatedAt": "2026-11-08T09:00:00.000Z"
+  },
+  {
+    "id": "tsk-006",
+    "title": "Flutter Mini Katalog ve Sepet Yönetimi Mobil Uygulaması",
+    "description": "Dart ve Flutter mimarisinde GridView, Model-Entity yapısı ve Sepet simülasyonunu içeren mobil katalog uygulamasının geliştirilmesi.",
+    "status": "pending",
+    "priority": "medium",
+    "assignee": "Hüseyin Adıgüzel",
+    "tags": [
+      "mobile",
+      "flutter",
+      "dart",
+      "ui",
+      "state-management"
+    ],
+    "createdAt": "2026-11-08T09:15:00.000Z",
+    "updatedAt": "2026-11-08T09:15:00.000Z"
+  },
+  {
+    "id": "tsk-007",
+    "title": "Postman Test Suite ve Otomatik Test Senaryoları",
+    "description": "Geliştirilen tüm CRUD ve Raporlama endpoint'leri için Postman koleksiyonunun oluşturulması ve ekran görüntülerinin test kanıtı olarak belgelenmesi.",
+    "status": "in_progress",
+    "priority": "high",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "qa",
+      "testing",
+      "postman",
+      "documentation"
+    ],
+    "createdAt": "2026-11-08T09:30:00.000Z",
+    "updatedAt": "2026-11-08T10:10:00.000Z"
+  },
+  {
+    "id": "tsk-008",
+    "title": "TaskFlow Swagger OpenAPI Dokümantasyonu",
+    "description": "API uç noktalarının OpenAPI standartlarında şematize edilmesi ve interaktif arayüzün hazırlanması.",
+    "status": "in_progress",
+    "priority": "high",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "api",
+      "swagger",
+      "documentation"
+    ],
+    "createdAt": "2026-11-08T07:28:04.109Z",
+    "updatedAt": "2026-11-08T07:28:04.109Z"
+  },
+  {
+    "id": "tsk-009",
+    "title": "TaskFlow Swagger OpenAPI Dokümantasyonu",
+    "description": "API uç noktalarının OpenAPI standartlarında şematize edilmesi ve interaktif arayüzün hazırlanması.",
+    "status": "in_progress",
+    "priority": "high",
+    "assignee": "Sefa Yusuf Kütük",
+    "tags": [
+      "api",
+      "swagger",
+      "documentation"
+    ],
+    "createdAt": "2026-11-08T07:29:58.792Z",
+    "updatedAt": "2026-11-08T07:29:58.792Z"
+  }
+]
